@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html>
+        <head>
+                <title>Listing Helper Upload</title>
+        </head>
+        <body>
+                <input type="file" id="uploadInput" />
+                <button onclick="getPresignedUrl()">Upload</button>
+
+                <script src="http://sdk.amazonaws.com/js/aws-sdk-2.928.0.min.js"></script>
+                <script>
+                        const bucketName ='clothing-images-for-rekognition';
+
+                        function getPresignedUrl(){
+                                const fileInput = document.getElementById('uploadInput');
+                                const file = fileInput.files[0];
+                                
+                                AWS.config.update({
+                                        region:'us-east-1',
+                                });
+                                const s3 = new AWS.S3();
+                                const params = {
+                                        Bucket: bucketName,
+                                        Key: file.name,
+                                        ContentType: file.type,
+                                        ACL: 'public-read',
+                                        Expires: 3600,
+                                };
+
+                                s3.getSignedUrl('putObject', params, function (err,url) {
+                                        if (err) {
+                                                console.log('Pre-signed URL', err);
+                                        } else {
+                                                console.log('Pre-signed URL', url);
+                                                window.location.href=url;
+                                        }
+                                });
+                        }
+                </script>
+        </body>
+</html>
