@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Upload file to S3</title>
+    <script src="https://unpkg.com/vue@1.0.28/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios@0.2.1/dist/axios.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=GT+America&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" type="text/css" href="styles.css">
+  </head>
+  <body>
+    <div id="app" class="app-container">
+      <h1>Listing Helper!</h1>
+      <div class="image-container" v-if="!image">
+        <h2>Select an image</h2>
+        <input type="file" @change="onFileChange" accept="image/jpeg">
+      </div>
+      <div class="image-container" v-else>
+        <img :src="image" class="uploaded-image" />
+        <button class="button-style" v-if="!uploadURL" @click="removeImage">Remove image</button>
+        <button class="button-style" v-if="!uploadURL" @click="uploadImage">Upload image</button>
+      </div>
+      <h2 v-if="uploadURL">Success! Image uploaded to bucket.</h2>
+    </div>
+
+    <script>
+      /* SAME JS CODE */
+    </script>
+  </body>
+</html>
